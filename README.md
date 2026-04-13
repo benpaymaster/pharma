@@ -1,4 +1,4 @@
-```
+
 # 💊 pharmafind
 **The Autonomous Pharmacy Protocol on Stellar**
 
@@ -38,7 +38,15 @@ A real-time **Tailwind & Leaflet.js** dashboard that visualizes agent activity, 
 
 ```
 
-pharma/ ├── agents/ │ ├── monitor-agent.js # NEW: The "Brain" - Scans stock & expiry │ ├── scout-agent.js # The "Payer" - Initiates x402 Stellar buys │ └── supplier-agent.js # The "Hub" - Sells drug data via x402 ├── inventory.json # Mock Pharmacy Database (The Problem) ├── index.html # The "Agentic Command Center" UI ├── package.json # Dependencies └── README.md # Documentation
+pharma/
+├── agents/
+│   ├── monitor-agent.js     # The "Brain" - Scans stock & expiry
+│   ├── scout-agent.js       # The "Payer" - Initiates x402 Stellar buys
+│   └── supplier-agent.js    # The "Hub" - Sells drug data via x402
+├── inventory.json           # Mock Pharmacy Database
+├── index.html               # The "Agentic Command Center" UI
+├── package.json             # Dependencies
+└── README.md                # Documentation
 
 ```
 
