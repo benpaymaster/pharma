@@ -1,0 +1,10 @@
+{
+  "asset_schema": {
+    "name": "string (e.g., Amoxicillin)",
+    "asset_code": "string (max 12 chars)",
+    "batch_id": "string (UUID or Serial)",
+    "expiry_date": "ISO-8601 (YYYY-MM-DD)",
+    "price_usdc": "float",
+    "verified_supplier": "Stellar_Public_Key"
+  }
+}

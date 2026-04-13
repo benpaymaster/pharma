@@ -1,0 +1,4 @@
+[
+  { "id": "AMOX-101", "name": "Amoxicillin", "stock": 2, "expiry": "2026-05-10" },
+  { "id": "INS-202", "name": "Insulin", "stock": 15, "expiry": "2026-04-20" }
+]
