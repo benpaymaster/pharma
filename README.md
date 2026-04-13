@@ -62,10 +62,9 @@ npm install
 
 **Run the Autonomous Loop:**
 
-1.  **Start the Dashboard:** Open `index.html` in any browser.
+1. **Start the Dashboard:** Open `index.html` in any browser.
 
-2.  **Run the Monitor:** ```bash node agents/monitor-agent.js
-
-* * * * *
+2. **Run the Monitor:** ```bash
+node agents/monitor-agent.js
 
 **Developed by:** [benpaymaster] | **Network:** Stellar Testnet 2026
