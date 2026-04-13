@@ -3,51 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pharmafind | Dashboard</title>
+    <title>pharmafind | Agentic Command Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        #map { height: 400px; border-radius: 12px; }
+        #map { height: 450px; border-radius: 12px; z-index: 1; }
         .log-gradient { background: linear-gradient(180deg, rgba(30,41,59,1) 0%, rgba(15,23,42,1) 100%); }
+        /* Custom scrollbar for logs */
+        #logs::-webkit-scrollbar { width: 4px; }
+        #logs::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-200 font-sans">
-    <div class="max-w-6xl mx-auto p-6">
+    <div class="max-w-7xl mx-auto p-6">
         <header class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold tracking-tight text-sky-400">pharmafind <span class="text-slate-500 text-sm font-mono">v1.0</span></h1>
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-sky-400">pharmafind</h1>
+                <p class="text-slate-500 text-sm font-mono italic">Autonomous Pharmacy Protocol (Hackathon v1.0)</p>
+            </div>
             <div class="flex gap-4">
                 <div class="bg-slate-900 border border-slate-800 px-4 py-2 rounded-lg">
-                    <p class="text-xs text-slate-500 uppercase">Pharmacy A (Boots)</p>
-                    <p class="font-mono text-sky-300">Active · Testnet</p>
+                    <p class="text-xs text-slate-500 uppercase font-bold">Node Status</p>
+                    <p class="font-mono text-green-400 flex items-center gap-2">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        Boots Agent Online
+                    </p>
                 </div>
             </div>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 space-y-6">
-                <div id="map" class="border border-slate-800"></div>
+                <div id="map" class="border border-slate-800 shadow-2xl"></div>
                 
                 <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-                    <h2 class="text-xl font-semibold mb-4 text-white">Active Inventory Scanning</h2>
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold text-white">Local Inventory Status</h2>
+                        <span class="text-xs bg-slate-800 px-2 py-1 rounded text-slate-400 italic">Last Scan: Just now</span>
+                    </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 bg-slate-950 rounded-lg border border-red-900/30">
-                            <p class="text-red-400 font-bold">Amoxicillin</p>
-                            <p class="text-sm text-slate-400">Low Stock: 4 units</p>
+                        <div id="card-amox" class="p-4 bg-slate-950 rounded-lg border border-red-900/30 transition-all duration-500">
+                            <p class="text-red-400 font-bold uppercase tracking-wider">Amoxicillin</p>
+                            <p id="stock-amox" class="text-sm text-slate-400 font-mono">Stock: 4 units (CRITICAL)</p>
                         </div>
                         <div class="p-4 bg-slate-950 rounded-lg border border-yellow-900/30">
-                            <p class="text-yellow-400 font-bold">Insulin</p>
-                            <p class="text-sm text-slate-400">Expiry: 12 days</p>
+                            <p class="text-yellow-400 font-bold uppercase tracking-wider">Insulin</p>
+                            <p class="text-sm text-slate-400 font-mono">Expiry: 12 days (MONITOR)</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden flex flex-col h-[600px]">
-                <div class="p-4 border-b border-slate-800 bg-slate-800/50">
-                    <h3 class="font-bold">Agentic Activity Feed</h3>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden flex flex-col h-[700px] shadow-2xl">
+                <div class="p-4 border-b border-slate-800 bg-slate-800/50 flex justify-between items-center">
+                    <h3 class="font-bold text-sky-400 uppercase text-sm tracking-widest">Agent Activity Log</h3>
+                    <div class="h-2 w-2 bg-sky-400 rounded-full animate-pulse"></div>
                 </div>
-                <div id="logs" class="p-4 space-y-3 overflow-y-auto flex-grow font-mono text-xs">
-                    <div class="text-sky-400">[SYSTEM] Boots Agent initialized...</div>
+                <div id="logs" class="p-4 space-y-3 overflow-y-auto flex-grow font-mono text-xs leading-relaxed">
+                    <div class="text-slate-500 italic">[SYSTEM] Initializing Stellar SDK...</div>
+                    <div class="text-sky-400">[SYSTEM] Boots Monitor Agent linked to x402 Gateway.</div>
+                </div>
+                <div class="p-4 bg-slate-950 border-t border-slate-800 text-[10px] text-slate-600 font-mono">
+                    NETWORK: STELLAR_TESTNET_2026 | HUB: HUB_SOUTH_01
                 </div>
             </div>
         </div>
@@ -55,29 +75,75 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Setup Map
+        // --- MAP SETUP ---
         const map = L.map('map').setView([51.505, -0.09], 13);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: 'Stellar Hackathon 2026'
+        }).addTo(map);
 
-        const bootsIcon = L.circleMarker([51.505, -0.09], { color: '#38bdf8', radius: 8 }).addTo(map).bindPopup('Boots Pharmacy');
-        const hubIcon = L.circleMarker([51.52, -0.12], { color: '#fbbf24', radius: 10 }).addTo(map).bindPopup('Regional Supply Hub');
+        // Map Markers
+        const bootsIcon = L.circleMarker([51.505, -0.09], { 
+            color: '#ef4444', // Start Red for low stock
+            fillColor: '#ef4444',
+            fillOpacity: 0.6,
+            radius: 12 
+        }).addTo(map).bindPopup('<b>Boots Central</b><br>Status: Out of Stock');
 
-        // Simulated Live Stream of your Terminal Logs
+        const hubIcon = L.circleMarker([51.52, -0.12], { 
+            color: '#fbbf24', 
+            fillColor: '#fbbf24',
+            fillOpacity: 0.4,
+            radius: 10 
+        }).addTo(map).bindPopup('<b>Regional Supply Hub</b><br>Available: 500+ units');
+
+        // --- LOGIC FUNCTIONS ---
         function addLog(msg, type = 'info') {
             const logs = document.getElementById('logs');
             const div = document.createElement('div');
-            const color = type === 'success' ? 'text-green-400' : type === 'warn' ? 'text-yellow-400' : 'text-slate-400';
-            div.className = color;
-            div.innerHTML = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            let color = 'text-slate-400';
+            let prefix = 'ℹ️';
+
+            if (type === 'success') { color = 'text-green-400'; prefix = '✅'; }
+            if (type === 'warn') { color = 'text-red-400'; prefix = '⚠️'; }
+            if (type === 'stellar') { color = 'text-sky-300'; prefix = '💰'; }
+
+            div.className = `${color} border-l border-slate-800 pl-2 py-1`;
+            div.innerHTML = `<span class="opacity-50">${new Date().toLocaleTimeString()}</span> ${prefix} ${msg}`;
             logs.prepend(div);
         }
 
-        // The "Script" for your video demo
-        setTimeout(() => addLog("📡 Scanning local inventory...", 'info'), 1000);
-        setTimeout(() => addLog("⚠️ ALERT: Amoxicillin critically low.", 'warn'), 3000);
-        setTimeout(() => addLog("💰 x402 Request: Paying 0.01 XLM for stock data...", 'info'), 5000);
-        setTimeout(() => addLog("✅ Payment Hash: b6610b58... Verified!", 'success'), 7000);
-        setTimeout(() => addLog("📦 Supplier: Warehouse-South-1 unlocked.", 'success'), 8500);
+        // --- SIMULATED DEMO SEQUENCE (For the Video) ---
+        
+        // 1. Monitor Detects Problem
+        setTimeout(() => addLog("Monitor Agent: Scanning local inventory...", 'info'), 2000);
+        setTimeout(() => addLog("Low stock detected: Amoxicillin (4 units).", 'warn'), 4000);
+        
+        // 2. x402 Discovery Handshake
+        setTimeout(() => addLog("Scout Agent: Querying Regional Hub via x402...", 'info'), 6000);
+        setTimeout(() => addLog("HTTP 402: Payment Required. Signing micro-USDC...", 'stellar'), 8000);
+        setTimeout(() => addLog("x402 UNLOCKED: 500 units available at Hub.", 'success'), 10000);
+        
+        // 3. MPP Procurement & Visual Refill
+        setTimeout(() => {
+            addLog("MPP Settlement: Executing bulk purchase (50.00 USDC).", 'stellar');
+            addLog("Memo: BATCH-AMOX-88293. Finalizing on Stellar...", 'info');
+        }, 13000);
+
+        setTimeout(() => {
+            addLog("REFILL COMPLETE: Inventory updated to 100 units.", 'success');
+            
+            // Visual Update on Map
+            bootsIcon.setStyle({ color: '#22c55e', fillColor: '#22c55e', radius: 10 });
+            bootsIcon.bindPopup('<b>Boots Central</b><br>Status: REFILLED').openPopup();
+
+            // Visual Update on Card
+            const card = document.getElementById('card-amox');
+            const stockText = document.getElementById('stock-amox');
+            card.classList.replace('border-red-900/30', 'border-green-900/30');
+            stockText.innerHTML = "Stock: 100 units (OPTIMAL)";
+            stockText.classList.replace('text-slate-400', 'text-green-400');
+        }, 16000);
+
     </script>
 </body>
 </html>

@@ -23,7 +23,7 @@ In centralized systems, pharmacists spend hours physically phoning suppliers to 
 🏗️ Tech Stack & Stellar Integration
 ------------------------------------
 ### 1. Agentic Discovery (x402)
-We use the **x402 protocol** to monetize pharmacy data. The `Supplier Agent` paywalls inventory data. The `Boots Scout Agent` must sign a **Stellar Micropayment** (XLM/USDC) to "unlock" the verified stock levels.
+We use the **x402 protocol** to monetize pharmacy data. The `Supplier Agent` paywalls inventory data. The `Boots Scout Agent` must sign a **Stellar Micropayment** (USDC) to "unlock" the verified stock levels.
 
 ### 2. Machine Payments (MPP)
 Utilizing the **Machine Payments Protocol (MPP)** for final settlement, allowing machine-to-machine payment flows where the buyer agent charges the transaction against an authorized spending policy.
@@ -36,8 +36,7 @@ A real-time **Tailwind & Leaflet.js** dashboard that visualizes agent activity, 
 📦 Project Structure
 --------------------
 
-```
-
+```text
 pharma/
 ├── agents/
 │   ├── monitor-agent.js     # The "Brain" - Scans stock & expiry
@@ -50,12 +49,16 @@ pharma/
 
 ```
 
----
+* * * * *
 
 🚦 Quick Start
 --------------
+
 **Installation:**
-```bash
+
+Bash
+
+```
 npm install
 
 ```
@@ -63,9 +66,42 @@ npm install
 **Run the Autonomous Loop:**
 
 1. **Start the Dashboard:** Open `index.html` in any browser.
-
-2. **Run the Monitor:** 
+2. **Start the Supplier Hub:**
 ```bash
+node agents/supplier-agent.js
+
+```
+
+1.  **Run the Monitor:** 
+```bash 
 node agents/monitor-agent.js
 
+```
+
+---
+
+## 📖 The Boots Story: Why PharmaFind?
+In 2026, pharmacies like **Boots** still face "blind spots" in the supply chain. When a life-saving drug like **Amoxicillin** hits critical levels, the current system relies on manual phone calls and faxed invoices.
+
+**PharmaFind** changes the narrative:
+1. **The Crisis:** A Boots branch in Central London hits a stock-out at 3 AM.
+2. **The Agentic Response:** The **Monitor Agent** doesn't wait for human intervention. It detects the low stock and triggers the **Scout Agent**.
+3. **The Discovery:** Using **x402**, the Scout finds a surplus at a Regional Hub. It pays a 0.01 USDC "Discovery Fee" to verify the stock exists---no phone calls needed.
+4. **The Settlement:** Using **MPP**, the bulk purchase is finalized on the **Stellar Network** in seconds.
+5. **The Result:** By the time the pharmacist arrives at 9 AM, the delivery is already on the truck.
+
+---
+
+## 🔗 Stellar Integration & Transparency
+All agentic procurement is recorded on-chain for 100% auditability.
+
+* **Network:** Stellar Testnet
+* **Asset:** USDC
+* **Agent Wallet:** `GAVWL4DHNZBBIAMYAPUPJFXBALFLA2KLZXKW2OZTLJYR4YWYVSAXLBPW`
+* **Explorer Link:** [View Agent Transactions on StellarExpert](https://stellar.expert/explorer/testnet/account/GAVWL4DHNZBBIAMYAPUPJFXBALFLA2KLZXKW2OZTLJYR4YWYVSAXLBPW)
+
+---
+
 **Developed by:** [benpaymaster] | **Network:** Stellar Testnet 2026
+
+```

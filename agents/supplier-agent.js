@@ -43,5 +43,5 @@ app.get('/check-stock', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`✅ Supplier Agent (PharmaFind Hub) online at http://localhost:${port}`);
+    console.log(`Supplier Agent (PharmaFind Hub) online at http://localhost:${port}`);
 });
