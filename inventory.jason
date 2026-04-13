@@ -1,0 +1,14 @@
+[
+  {
+    "id": "AMOX-001",
+    "name": "Amoxicillin 500mg",
+    "stock": 4,
+    "expiry_date": "2026-06-01"
+  },
+  {
+    "id": "INS-992",
+    "name": "Insulin Glargine",
+    "stock": 25,
+    "expiry_date": "2026-04-20"
+  }
+]
