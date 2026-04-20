@@ -83,6 +83,15 @@ node agents/monitor-agent.js
 ## 📖 The Boots Story: Why PharmaFind?
 In 2026, pharmacies like **Boots** still face "blind spots" in the supply chain. When a life-saving drug like **Amoxicillin** hits critical levels, the current system relies on manual phone calls and faxed invoices.
 
+## 📍 The Bramley 1.0 Pilot (West Yorkshire HealthTech Cluster)
+For the Nexus Leeds launch, we have mapped the protocol onto the **Bramley (LS13)** pharmacy cluster:
+
+- **Everest Pharmacy:** Cloud-Integrated (Pharmacy X). Acts as our primary "High-Frequency" node.
+- **Manor Park Pharmacy:** Legacy-Integrated (ProScript). Demonstrates our middleware adapter.
+- **Boots Bramley:** Enterprise-HQ Node. Connected via the Columbus data-lake bridge.
+
+**The Bramley Cascade:** When Everest hits a stockout, the Scout Agent autonomously queries Manor Park and Boots using the x402 protocol, creating the first resilient neighborhood drug-network in Leeds.
+
 **PharmaFind** changes the narrative:
 1. **The Crisis:** A Boots branch in Central London hits a stock-out at 3 AM.
 2. **The Agentic Response:** The **Monitor Agent** doesn't wait for human intervention. It detects the low stock and triggers the **Scout Agent**.
